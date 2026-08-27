@@ -1,0 +1,37 @@
+[package]
+name = "mkproject"
+version = "0.1.0"
+edition = "2024"
+authors = ["Vincent Désirée"]
+license = "MIT OR Apache-2.0"
+description = "Automated Rust project scaffolding with workspace routing and license management."
+
+[dependencies]
+anyhow = "1.0"
+clap = { version = "4.5", features = ["derive"] }
+serde = { version = "1.0", features = ["derive"] }
+chrono = "0.4"
+toml = "0.8"
+dirs = "5.0"
+tempfile = "3"
+
+[lints.rust]
+dead_code = "warn"
+non_snake_case = "warn"
+unreachable_code= "warn"
+
+[lints.clippy]
+pedantic = {level = "warn", priority = -1}
+nursery = {level = "warn", priority = -1}
+style = {level = "warn", priority = -1}
+
+unwrap_used = "warn"
+expect_used = "warn"
+todo = "warn"
+
+[profile.release]
+opt-level = 'z'     # Optimize for size
+#opt-level = '3'    # Optimize for performance
+lto = true          # Slower compilation, faster execution
+codegen-units = 1   #<[fim-middle]>
+panic = "abort"     # Suppress stack unwinding, reduces binary size
