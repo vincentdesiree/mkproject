@@ -30,6 +30,10 @@ pub struct Cli {
     /// License SPDX or custom (ex: "MIT", "Apache-2.0", "MIT OR Apache-2.0", "Unlicense", "license_name:path_to_license_file")
     #[arg(short = 'l', long = "license")]
     pub license: Option<LicenseType>,
+
+    /// Skip Git repository initialization
+    #[arg(long = "no-git")]
+    pub no_git: bool,
 }
 
 impl Cli {
@@ -57,6 +61,7 @@ mod tests {
             path: None,
             authors: None,
             license: None,
+            no_git: false,
         }
         .normalize();
 
