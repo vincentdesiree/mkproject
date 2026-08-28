@@ -24,8 +24,8 @@ pub fn generate_project(resolved: &ResolvedProject) {
     let license_str = resolved.license.name().unwrap_or("");
     let current_year = chrono::Utc::now().year() as u16;
 
-    let status = Command::new("cargo")
-        .arg("generate")
+    let mut cmd = Command::new("cargo");
+    cmd.arg("generate")
         .arg("--git")
         .arg(&resolved.template_url)
         .arg("--name")
@@ -37,10 +37,14 @@ pub fn generate_project(resolved: &ResolvedProject) {
         .arg("-d")
         .arg(format!("license={license_str}"))
         .arg("-d")
-        .arg(format!("year={current_year}"))
-        .status();
+        .arg(format!("year={current_year}"));
+    if resolved.no_git {
+        cmd.arg("--vcs").arg("none");
+    } else {
+        cmd.arg("--force-git-init");
+    }
 
-    match status {
+    match cmd.status() {
         Ok(s) if s.success() => {
             let project_path = resolved.target_path.join(&resolved.name);
             if let Err(err) = resolved

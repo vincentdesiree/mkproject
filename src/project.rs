@@ -12,6 +12,7 @@ pub struct ResolvedProject {
     pub template_url: String,
     pub authors: String,
     pub license: LicenseType,
+    pub no_git: bool,
 }
 
 impl ResolvedProject {
@@ -57,6 +58,7 @@ impl ResolvedProject {
             template_url,
             authors,
             license,
+            no_git: cli.no_git,
         }
     }
 }
@@ -112,6 +114,7 @@ mod tests {
             path: None,
             authors: None,
             license: None,
+            no_git: false,
         }
     }
 
